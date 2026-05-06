@@ -106,36 +106,6 @@ python3 scripts/run_all_scenarios.py -t 192.168.1.5
 
 ---
 
-## Project Structure
-
-```
-packet-sniffer-protocol-analyzer/
-├── src/                          # Core source modules
-│   ├── __init__.py
-│   ├── capture.py               # Capture engine (Scapy sniff wrapper)
-│   ├── filter.py                # Protocol-based packet filtering
-│   ├── parser.py                # Field extraction and record building
-│   └── report.py                # Console output, alerts, CSV export
-├── scripts/                      # Utility and traffic generation scripts
-│   ├── generate_dns.py          # DNS traffic generator (normal, DGA, tunnel)
-│   ├── generate_http.py         # Cleartext HTTP traffic generator
-│   ├── generate_icmp.py         # ICMP host discovery traffic generator
-│   ├── generate_tcp_syn.py      # TCP SYN scan/flood traffic generator
-│   └── run_all_scenarios.py     # Master scenario runner for full lab tests
-├── tests/                        # Unit tests and integration tests
-├── docs/                         # Documentation, papers, and guides
-├── main.py                       # Entry point and argument parsing
-├── requirements.txt              # Python dependencies
-├── pyproject.toml               # Project metadata and configuration
-├── .gitignore                   # Git ignore rules
-├── README.md                    # This file
-├── CHANGELOG.md                 # Version history
-├── CONTRIBUTING.md              # Contribution guidelines
-├── LICENSE.md                   # License and ethical guidelines
-├── STRUCTURE.md                 # Detailed architecture documentation
-└── results/                     # CSV output files (gitignored)
-```
-
 ### Architecture Overview
 
 - **src/**: Core functionality organized as a Python package
@@ -168,7 +138,7 @@ Unauthorized use of packet capture tools is illegal under the Electronic Communi
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/packet-sniffer-protocol-analyzer.git
+git clone https://github.com/saged0/packet-sniffer-protocol-analyzer
 cd packet-sniffer-protocol-analyzer
 
 # Create virtual environment (recommended)
@@ -193,12 +163,11 @@ python3 -m pytest tests/
 - Add docstrings to functions and classes
 - Include comments for complex logic
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
 ## Authors
-
+Sage Despeignes, Darryl Lomax, Jalen Theodore
 Bowie State University — Department of Computer Science  
 COSC 489: Ethical Hacking / COSC 442: Cybersecurity and Society  
 Spring 2026  
