@@ -168,6 +168,7 @@ python3 -m pytest tests/
 
 ## Authors
 Sage Despeignes, Darryl Lomax, Jalen Theodore
+
 Bowie State University — Department of Computer Science  
 COSC 489: Ethical Hacking 
 Spring 2026  
