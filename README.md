@@ -17,7 +17,8 @@ Built as part of the COSC 489 final project at Bowie State University, Spring 20
   - ICMP echo request flood / host discovery detection
   - Cleartext HTTP session detection
   - DNS anomaly detection (DGA indicators: long names, high entropy)
-- Optional CSV export for post-capture analysis
+- CSV export for post-capture analysis and alerts
+- PCAP export for Wireshark inspection and forensics
 - Designed for controlled lab use only
 
 ---
@@ -56,6 +57,12 @@ sudo python3 main.py -i eth0 -c 100
 # Save results to CSV
 sudo python3 main.py -i eth0 -o results/capture.csv
 
+# Save packets as PCAP (Wireshark format)
+sudo python3 main.py -i eth0 --pcap results/capture.pcap
+
+# Export to both CSV and PCAP
+sudo python3 main.py -i eth0 -c 100 -o results/capture.csv --pcap results/capture.pcap
+
 # Set custom SYN alert threshold
 sudo python3 main.py -i eth0 --syn-threshold 3
 ```
@@ -67,8 +74,7 @@ sudo python3 main.py -i eth0 --syn-threshold 3
 | `-i` | Network interface | Scapy default |
 | `-p` | Protocol filter: all, tcp, udp, icmp, dns, http | all |
 | `-c` | Packet count (0 = unlimited) | 0 |
-| `-o` | CSV output file path | None |
-| `--syn-threshold` | SYN packets before alert | 5 |
+| `-o` | CSV output file path | None || `--pcap` | PCAP output file path (Wireshark format) | None || `--syn-threshold` | SYN packets before alert | 5 |
 
 ---
 

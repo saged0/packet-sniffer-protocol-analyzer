@@ -8,7 +8,7 @@ The capture engine does NOT make detection or parsing decisions.
 Its only job is to collect packets and forward them to the callback.
 """
 
-from scapy.all import sniff, conf
+from scapy.all import sniff, conf, IP, TCP, UDP, ICMP
 
 
 class CaptureEngine:
