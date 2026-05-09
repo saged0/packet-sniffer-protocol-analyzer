@@ -69,12 +69,12 @@ sudo python3 main.py -i eth0 --syn-threshold 3
 
 ### All options
 
-| Flag | Description | Default |
-|------|-------------|---------|
-| `-i` | Network interface | Scapy default |
-| `-p` | Protocol filter: all, tcp, udp, icmp, dns, http | all |
-| `-c` | Packet count (0 = unlimited) | 0 |
-| `-o` | CSV output file path | None || `--pcap` | PCAP output file path (Wireshark format) | None || `--syn-threshold` | SYN packets before alert | 5 |
+| `-i`              | Network interface                          | Scapy default |
+| `-p`              | Protocol filter: all, tcp, udp, icmp, dns, http | all      |
+| `-c`              | Packet count (0 = unlimited)               | 0             |
+| `-o`              | CSV output file path                       | None          |
+| `--pcap`          | PCAP output file path (Wireshark format)   | None          |
+| `--syn-threshold` | SYN packets before alert fires             | 5             |
 
 ---
 
