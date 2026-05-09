@@ -2,7 +2,7 @@
 
 A Python-based network protocol analyzer and packet sniffer for capturing, filtering, parsing, and reporting TCP, UDP, ICMP, DNS, and HTTP traffic in a controlled Kali Linux lab.
 
-Built as part of the COSC 489 final project at Bowie State University, Spring 2026.
+Built as part of the COSC 489: Ethical Hacking final project at Bowie State University, Spring 2026.
 
 ---
 
@@ -13,12 +13,12 @@ Built as part of the COSC 489 final project at Bowie State University, Spring 20
 - Field-level parsing: IP/MAC addresses, ports, timestamps, TCP flags, DNS query names, HTTP request data
 - Real-time console output with color-coded alerts
 - Behavioral detection:
-  - TCP SYN flood / port scan detection
-  - ICMP echo request flood / host discovery detection
+  - TCP SYN flood and port scan detection
+  - ICMP echo request flood and host discovery detection
   - Cleartext HTTP session detection
   - DNS anomaly detection (DGA indicators: long names, high entropy)
-- CSV export for post-capture analysis and alerts
-- PCAP export for Wireshark inspection and forensics
+- CSV export for post-capture analysis
+- PCAP export for Wireshark inspection and side-by-side comparison
 - Designed for controlled lab use only
 
 ---
@@ -48,85 +48,97 @@ sudo python3 main.py
 # Capture on a specific interface
 sudo python3 main.py -i eth0
 
-# Filter to TCP only
+# Filter to a specific protocol
 sudo python3 main.py -i eth0 -p tcp
 
-# Capture 100 packets then stop
+# Capture a set number of packets then stop
 sudo python3 main.py -i eth0 -c 100
 
-# Save results to CSV
+# Save parsed results to CSV
 sudo python3 main.py -i eth0 -o results/capture.csv
 
-# Save packets as PCAP (Wireshark format)
+# Save raw packets to PCAP for Wireshark
 sudo python3 main.py -i eth0 --pcap results/capture.pcap
 
-# Export to both CSV and PCAP
-sudo python3 main.py -i eth0 -c 100 -o results/capture.csv --pcap results/capture.pcap
+# Export to both CSV and PCAP simultaneously
+sudo python3 main.py -i eth0 -o results/capture.csv --pcap results/capture.pcap
 
-# Set custom SYN alert threshold
+# Set a custom SYN alert threshold
 sudo python3 main.py -i eth0 --syn-threshold 3
 ```
 
-### All options
+### All Options
 
-| `-i`              | Network interface                          | Scapy default |
-| `-p`              | Protocol filter: all, tcp, udp, icmp, dns, http | all      |
-| `-c`              | Packet count (0 = unlimited)               | 0             |
-| `-o`              | CSV output file path                       | None          |
-| `--pcap`          | PCAP output file path (Wireshark format)   | None          |
-| `--syn-threshold` | SYN packets before alert fires             | 5             |
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-i` | Network interface (e.g. eth0) | Scapy default |
+| `-p` | Protocol filter: all, tcp, udp, icmp, dns, http | all |
+| `-c` | Packet count (0 = unlimited) | 0 |
+| `-o` | CSV output file path | None |
+| `--pcap` | PCAP output file path (Wireshark compatible) | None |
+| `--syn-threshold` | SYN packets from one source before alert fires | 5 |
 
 ---
 
-## Lab Traffic Generation
+## Project Structure
 
-Use the provided scripts in `scripts/` to generate test traffic for analyzer evaluation:
-
-```bash
-# Generate normal DNS baseline traffic
-python3 scripts/generate_dns.py --normal -c 8
-
-# Generate DGA-style (high-entropy) DNS queries
-python3 scripts/generate_dns.py --dga -c 10
-
-# Generate DNS tunnel-style queries (long subdomains)
-python3 scripts/generate_dns.py --tunnel -c 5
-
-# Generate ICMP host discovery (ping sweep)
-sudo python3 scripts/generate_icmp.py -t 192.168.1.5 -c 15
-
-# Generate TCP SYN port scan
-sudo python3 scripts/generate_tcp_syn.py -t 192.168.1.5 --scan
-
-# Generate TCP SYN flood
-sudo python3 scripts/generate_tcp_syn.py -t 192.168.1.5 --flood -p 80 -c 20
-
-# Generate cleartext HTTP traffic
-python3 scripts/generate_http.py --demo
-
-# Run all scenarios in sequence (recommended for full testing)
-python3 scripts/run_all_scenarios.py -t 192.168.1.5
+```
+packet-sniffer-protocol-analyzer/
+├── main.py               # Entry point and argument parsing
+├── src/
+│   ├── __init__.py
+│   ├── capture.py        # Capture engine (Scapy sniff wrapper)
+│   ├── filter.py         # Protocol-based packet filtering
+│   ├── parser.py         # Field extraction and record building
+│   ├── report.py         # Console output, alerts, CSV export
+│   └── pcap_export.py    # PCAP file export using wrpcap
+├── scripts/
+│   ├── generate_icmp.py      # ICMP host discovery traffic generator
+│   ├── generate_tcp_syn.py   # TCP SYN scan and flood generator
+│   ├── generate_dns.py       # DNS baseline, DGA, and tunnel generator
+│   ├── generate_http.py      # Cleartext HTTP traffic generator
+│   └── run_all_scenarios.py  # Master runner for all scenarios
+├── tests/                # Unit and integration tests
+├── docs/                 # Project documentation and testing guide
+├── results/              # CSV and PCAP output (gitignored)
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
-**Note:** Run the analyzer in one terminal while traffic generators run in another to capture and alert on suspicious activity.
-
 ---
 
-### Architecture Overview
+## Traffic Generation Scripts
 
-- **src/**: Core functionality organized as a Python package
-  - Modular design with separation of concerns (capture → filter → parse → report)
-  - Each module handles one responsibility
-  - Importable as `from src.capture import CaptureEngine`
+Use the scripts in `scripts/` to generate controlled test traffic while the analyzer is running.
 
-- **scripts/**: Lab testing and traffic generation utilities
-  - Standalone scripts for generating test traffic
-  - No sudo required for DNS and HTTP generators
-  - Run together with `run_all_scenarios.py` for comprehensive testing
+```bash
+# Normal DNS queries for baseline traffic
+python3 scripts/generate_dns.py --normal -c 8
 
-- **tests/**: Placeholder for unit and integration tests
-  
-- **docs/**: Project documentation, research papers, and guides
+# High-entropy DGA-style DNS queries
+python3 scripts/generate_dns.py --dga -c 10
+
+# Long subdomain DNS tunnel-style queries
+python3 scripts/generate_dns.py --tunnel -c 5
+
+# Cleartext HTTP sessions
+python3 scripts/generate_http.py --demo
+
+# ICMP host discovery ping sweep (requires sudo and target IP)
+sudo python3 scripts/generate_icmp.py -t 192.168.1.5 -c 15
+
+# TCP SYN port scan (requires sudo and target IP)
+sudo python3 scripts/generate_tcp_syn.py -t 192.168.1.5 --scan
+
+# TCP SYN flood (requires sudo and target IP)
+sudo python3 scripts/generate_tcp_syn.py -t 192.168.1.5 --flood -p 80 -c 20
+
+# Run all scenarios in sequence
+sudo python3 scripts/run_all_scenarios.py -t 192.168.1.5
+```
+
+Run the analyzer in Terminal 1 and the traffic generators in Terminal 2 at the same time. See `docs/TESTING.md` for the full step-by-step testing guide.
 
 ---
 
@@ -138,44 +150,10 @@ Unauthorized use of packet capture tools is illegal under the Electronic Communi
 
 ---
 
-## Development
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/saged0/packet-sniffer-protocol-analyzer
-cd packet-sniffer-protocol-analyzer
-
-# Create virtual environment (recommended)
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Running Tests
-
-```bash
-# Add tests to tests/ directory
-python3 -m pytest tests/
-```
-
-### Code Style
-
-- Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) guidelines
-- Use type hints where practical
-- Add docstrings to functions and classes
-- Include comments for complex logic
-
-
----
-
 ## Authors
+
 Sage Despeignes, Darryl Lomax, Jalen Theodore
 
-Bowie State University — Department of Computer Science  
-COSC 489: Ethical Hacking 
-Spring 2026  
+Bowie State University — Department of Computer Science
+COSC 489: Ethical Hacking — Spring 2026
 Instructor: Devharsh Trivedi, Ph.D., CISSP
