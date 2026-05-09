@@ -69,45 +69,45 @@ def main():
 
     # 1. Normal DNS - baseline traffic
     run(
-        [py, "generate_dns.py", "--normal", "-c", "8"],
+        [py, "scripts/generate_dns.py", "--normal", "-c", "8"],
         "Normal DNS Queries (baseline)"
     )
 
     # 2. ICMP ping sweep
     run(
-        [py, "generate_icmp.py", "-t", target, "-c", "15", "--interval", "0.1"],
+        [py, "scripts/generate_icmp.py", "-t", target, "-c", "15", "--interval", "0.1"],
         "ICMP Echo Requests - Host Discovery"
     )
 
     # 3. TCP SYN port scan
     run(
-        [py, "generate_tcp_syn.py", "-t", target, "--scan"],
+        [py, "scripts/generate_tcp_syn.py", "-t", target, "--scan"],
         "TCP SYN Port Scan (20 common ports)"
     )
 
     # 4. TCP SYN flood
     run(
-        [py, "generate_tcp_syn.py", "-t", target, "--flood",
+        [py, "scripts/generate_tcp_syn.py", "-t", target, "--flood",
          "-p", "80", "-c", "20", "--interval", "0.05"],
         "TCP SYN Flood (port 80)"
     )
 
     # 5. DGA-style DNS
     run(
-        [py, "generate_dns.py", "--dga", "-c", "10"],
+        [py, "scripts/generate_dns.py", "--dga", "-c", "10"],
         "DGA-Style DNS Queries (high entropy)"
     )
 
     # 6. DNS tunnel-style
     run(
-        [py, "generate_dns.py", "--tunnel", "-c", "5"],
+        [py, "scripts/generate_dns.py", "--tunnel", "-c", "5"],
         "DNS Tunnel-Style Queries (long subdomains)"
     )
 
     # 7. HTTP cleartext
     if not args.skip_http:
         run(
-            [py, "generate_http.py", "--demo"],
+            [py, "scripts/generate_http.py", "--demo"],
             "Cleartext HTTP Sessions"
         )
 
