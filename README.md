@@ -81,32 +81,25 @@ sudo python3 main.py -i eth0 --syn-threshold 3
 ---
 
 ## Project Structure
-
-```
-packet-sniffer-protocol-analyzer/
-├── main.py               # Entry point and argument parsing
-├── src/
-│   ├── __init__.py
-│   ├── capture.py        # Capture engine (Scapy sniff wrapper)
-│   ├── filter.py         # Protocol-based packet filtering
-│   ├── parser.py         # Field extraction and record building
-│   ├── report.py         # Console output, alerts, CSV export
-│   └── pcap_export.py    # PCAP file export using wrpcap
-├── scripts/
-│   ├── generate_icmp.py      # ICMP host discovery traffic generator
-│   ├── generate_tcp_syn.py   # TCP SYN scan and flood generator
-│   ├── generate_dns.py       # DNS baseline, DGA, and tunnel generator
-│   ├── generate_http.py      # Cleartext HTTP traffic generator
-│   └── run_all_scenarios.py  # Master runner for all scenarios
-├── tests/                # Unit and integration tests
-├── docs/                 # Project documentation and testing guide
-├── results/              # CSV and PCAP output (gitignored)
-├── requirements.txt
-├── .gitignore
-└── README.md
-```
-
----
+| Location | Description |
+|----------|-------------|
+| `main.py` | Entry point and argument parsing |
+| `src/capture.py` | Capture engine using Scapy sniff |
+| `src/filter.py` | Protocol-based packet filtering |
+| `src/parser.py` | Field extraction and record building |
+| `src/report.py` | Console output, alerts, and CSV export |
+| `src/pcap_export.py` | PCAP file export using wrpcap |
+| `scripts/generate_icmp.py` | ICMP host discovery traffic generator |
+| `scripts/generate_tcp_syn.py` | TCP SYN scan and flood generator |
+| `scripts/generate_dns.py` | DNS baseline, DGA, and tunnel generator |
+| `scripts/generate_http.py` | Cleartext HTTP traffic generator |
+| `scripts/run_all_scenarios.py` | Master runner for all test scenarios |
+| `tests/` | Unit and integration tests |
+| `docs/` | Project documentation and testing guide |
+| `results/` | CSV and PCAP output files (gitignored) |
+| `requirements.txt` | Python dependencies |
+| `.gitignore` | Excludes build artifacts and output files |
+| `README.md` | Setup instructions and usage examples |
 
 ## Traffic Generation Scripts
 
