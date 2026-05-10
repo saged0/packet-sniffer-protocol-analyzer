@@ -9,6 +9,12 @@ Step-by-step instructions for testing the packet sniffer on Kali Linux.
 ```bash
 git clone https://github.com/saged0/packet-sniffer-protocol-analyzer
 cd packet-sniffer-protocol-analyzer
+
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
