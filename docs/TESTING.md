@@ -41,6 +41,14 @@ Then use `sudo python3` as normal in every command below.
 
 ---
 
+> **Note on Virtual Environments:**
+> 
+> You only need to activate the virtual environment to install the dependencies. You do not need to be inside the virtual environment to run the project commands. However, if you installed Scapy inside the virtual environment (Option A), you must use `sudo venv/bin/python` instead of `sudo python3` when running the analyzer, because sudo does not inherit the virtual environment and will use the system Python instead.
+>
+> If you installed Scapy using apt (Option C) or the `--break-system-packages` flag (Option B), you do not need a virtual environment at all and can use `sudo python3` for all commands.
+
+---
+
 ## Step 2: Verify Scapy is Working
 
 Run whichever matches your installation method:
