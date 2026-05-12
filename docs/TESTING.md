@@ -129,17 +129,17 @@ python3 scripts/generate_http.py --demo
 
 **ICMP host discovery (requires sudo and a target IP):**
 ```bash
-sudo python3 scripts/generate_icmp.py -t 192.168.1.5 -c 15
+sudo python3 scripts/generate_icmp.py -t [Target_IP_Address] -c 15
 ```
 
 **TCP SYN port scan (requires sudo and a target IP):**
 ```bash
-sudo python3 scripts/generate_tcp_syn.py -t 192.168.1.5 --scan
+sudo python3 scripts/generate_tcp_syn.py -t [Target_IP_Address] --scan
 ```
 
 **Run all scenarios at once:**
 ```bash
-sudo python3 scripts/run_all_scenarios.py -t 192.168.1.5
+sudo python3 scripts/run_all_scenarios.py -t [Target_IP_Address]
 ```
 
 ---
