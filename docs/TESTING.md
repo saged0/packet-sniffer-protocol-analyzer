@@ -77,6 +77,11 @@ The analyzer and traffic generators must run at the same time in separate termin
 
 ## Terminal 1 — Start the Analyzer
 
+Replace `eth0` with your actual interface name. Check yours with:
+```bash
+ip a
+```
+
 **If you used Option A (venv):**
 ```bash
 sudo venv/bin/python main.py -i eth0
@@ -87,10 +92,6 @@ sudo venv/bin/python main.py -i eth0
 sudo python3 main.py -i eth0
 ```
 
-Replace `eth0` with your actual interface name. Check yours with:
-```bash
-ip a
-```
 
 To save output to CSV and PCAP at the same time:
 
