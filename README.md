@@ -119,16 +119,16 @@ python3 scripts/generate_dns.py --tunnel -c 5
 python3 scripts/generate_http.py --demo
 
 # ICMP host discovery ping sweep (requires sudo and target IP)
-sudo python3 scripts/generate_icmp.py -t 192.168.1.5 -c 15
+sudo python3 scripts/generate_icmp.py -t [Target_IP_Address] -c 15
 
 # TCP SYN port scan (requires sudo and target IP)
-sudo python3 scripts/generate_tcp_syn.py -t 192.168.1.5 --scan
+sudo python3 scripts/generate_tcp_syn.py -t [Target_IP_Address] --scan
 
 # TCP SYN flood (requires sudo and target IP)
-sudo python3 scripts/generate_tcp_syn.py -t 192.168.1.5 --flood -p 80 -c 20
+sudo python3 scripts/generate_tcp_syn.py -t [Target_IP_Address] --flood -p 80 -c 20
 
 # Run all scenarios in sequence
-sudo python3 scripts/run_all_scenarios.py -t 192.168.1.5
+sudo python3 scripts/run_all_scenarios.py -t [Target_IP_Address]
 ```
 
 Run the analyzer in Terminal 1 and the traffic generators in Terminal 2 at the same time. See `docs/TESTING.md` for the full step-by-step testing guide.
